@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I'm Sorry Baby 💗</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  padding: 22px;
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  background: linear-gradient(135deg,#ffe8f0,#ffd4e5,#fff0f5);
+  color: #d93675;
+}
+
+.glow {
+  position: fixed;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.45);
+  filter: blur(35px);
+  animation: glow 5s ease-in-out infinite alternate;
+}
+
+.one { top:-100px; left:-80px; }
+.two { bottom:-120px; right:-70px; }
+
+.card {
+  position: relative;
+  z-index: 2;
+  width: min(100%,470px);
+  padding: 38px 27px 34px;
+  text-align: center;
+  border: 1px solid white;
+  border-radius: 30px;
+  background: rgba(255,255,255,.9);
+  box-shadow: 0 18px 55px rgba(206,67,119,.18);
+  animation: cardIn .9s ease both;
+}
+
+.top-emoji {
+  font-size: 42px;
+  animation: bob 2.4s infinite;
+}
+
+h1 {
+  color: #f04483;
+  font-size: 36px;
+}
+
+.subtitle { color: #b65b7d; }
+
+.message {
+  color: #87566b;
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.divider {
+  width: 62px;
+  height: 3px;
+  margin: 22px auto;
+  background: #ffc0d6;
+  border-radius: 10px;
+}
+
+.question {
+  color: #e43c7c;
+  font-size: 21px;
+  font-weight: bold;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+
+button {
+  min-width: 116px;
+  border: 0;
+  border-radius: 999px;
+  padding: 13px 25px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+#yesBtn {
+  color: white;
+  background: linear-gradient(135deg,#ff5b99,#ed347c);
+  cursor: pointer;
+  box-shadow: 0 7px 17px #ed347c40;
+  transition: .2s;
+}
+
+#yesBtn:hover {
+  transform: translateY(-3px) scale(1.06);
+}
+
+#noBtn {
+  color: #a58a95;
+  background: #f3edf0;
+  cursor: default;
+  opacity: .85;
+  transition: left .18s, top .18s, transform .18s;
+  touch-action: manipulation;
+}
+
+#result {
+  min-height: 34px;
+  margin-top: 22px;
+  color: #ed347c;
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.small-note {
+  color: #b58a9b;
+  font-size: 12px;
+}
+
+.floaty {
+  position: fixed;
+  z-index: 1;
+  bottom: -45px;
+  pointer-events: none;
+  animation: floatUp linear forwards;
+}
+
+@keyframes cardIn {
+  from { opacity:0; transform:translateY(30px) scale(.94); }
+  to { opacity:1; transform:translateY(0) scale(1); }
+}
+
+@keyframes bob {
+  0%,100% { transform:translateY(0) rotate(-5deg); }
+  50% { transform:translateY(-9px) rotate(5deg); }
+}
+
+@keyframes floatUp {
+  0% { transform:translateY(0); opacity:0; }
+  12% { opacity:.9; }
+  100% { transform:translateY(-115vh) rotate(35deg); opacity:0; }
+}
+
+@keyframes glow {
+  from { transform:scale(.9); opacity:.55; }
+  to { transform:scale(1.18); opacity:.9; }
+}
+
+@media(max-width:420px) {
+  .card { padding:32px 20px; }
+  .message { font-size:15px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="glow one"></div>
+<div class="glow two"></div>
+
+<main class="card">
+
+  <div class="top-emoji">🥺💗</div>
+
+  <h1>I'm Sorry</h1>
+
+  <p class="subtitle">A little note from my heart 🌷</p>
+
+  <p class="message">
+    I know I made a mistake, and I'm truly sorry.
+    I never wanted to make you feel bad.
+  </p>
+
+  <p class="message">
+    I hope you can forgive me. I'll try to do better
+    and show it through my actions. 💕
+  </p>
+
+  <div class="divider"></div>
+
+  <p class="question">Will you forgive me? 🥹</p>
+
+  <div class="buttons">
+    <button id="yesBtn">Yes 💖</button>
+    <button id="noBtn">No 🙈</button>
+  </div>
+
+  <div id="result"></div>
+
+  <p class="small-note">
+    Sending you a little sunshine ☀️
+  </p>
+
+</main>
+
+<script>
+const yesButton = document.getElementById("yesBtn");
+const noButton = document.getElementById("noBtn");
+const result = document.getElementById("result");
+
+const floaties = ["💗","💕","♡","🌸","✨","💖"];
+
+function moveNoButton(event) {
+  if(event) event.preventDefault();
+
+  const margin = 14;
+  const maxX = window.innerWidth - noButton.offsetWidth - margin;
+  const maxY = window.innerHeight - noButton.offsetHeight - margin;
+
+  const x = margin + Math.random() * Math.max(0,maxX-margin);
+  const y = margin + Math.random() * Math.max(0,maxY-margin);
+
+  noButton.style.position = "fixed";
+  noButton.style.left = x + "px";
+  noButton.style.top = y + "px";
+  noButton.style.zIndex = "10";
+
+  noButton.style.transform =
+    "rotate(" + (Math.random()*18-9) + "deg)";
+}
+
+noButton.addEventListener("pointerenter",moveNoButton);
+
+noButton.addEventListener("touchstart",moveNoButton,{
+  passive:false
+});
+
+noButton.addEventListener("click",moveNoButton);
+
+window.addEventListener("resize",()=>{
+  if(noButton.style.position === "fixed"){
+    moveNoButton();
+  }
+});
+
+function makeFloaty() {
+  const item = document.createElement("span");
+
+  item.className = "floaty";
+  item.textContent =
+    floaties[Math.floor(Math.random()*floaties.length)];
+
+  item.style.left = Math.random()*100 + "vw";
+  item.style.fontSize = (17+Math.random()*22) + "px";
+  item.style.animationDuration = (4+Math.random()*4) + "s";
+
+  document.body.appendChild(item);
+
+  item.addEventListener("animationend",()=>{
+    item.remove();
+  });
+}
+
+setInterval(makeFloaty,650);
+
+yesButton.addEventListener("click",()=>{
+  result.textContent =
+    "Yay! Thank you for forgiving me! 💗🌸";
+
+  yesButton.textContent = "Thank you! 💞";
+  yesButton.disabled = true;
+
+  for(let i=0;i<24;i++){
+    setTimeout(makeFloaty,i*90);
+  }
+});
+</script>
+
+</body>
+</html>
